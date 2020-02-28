@@ -4,19 +4,30 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+            <a href='/tasks/create' class="btn btn-primary mb-4">Create a new task</a>
+            <ul class="list-group">
+                @forelse($tasks as $task)
+                    <li class="list-group-item {{$task->completed? 'list-group-item-success' : 'list-group-item-light'}} d-flex justify-content-between align-items-center">
+                        <a href="/tasks/{{$task->id}}">
+                            {{$task->title}}
+                        </a>
 
-                    You are logged in!
-                </div>
-            </div>
+                        @if($task->completed)
+                            Completed
+                        @else
+                            <form method="post" action="/tasks/{{$task->id}}/complete">
+                                @csrf
+                                @method('PUT')
+
+                                <button class = "btn btn-success" type="submit">Complete</button>
+                            </form>
+                        @endif
+                    </li>
+                @empty
+                    No tasks yet.
+                @endforelse
+            </ul>
         </div>
     </div>
 </div>

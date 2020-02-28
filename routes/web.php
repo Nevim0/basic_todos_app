@@ -18,3 +18,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::put('/tasks/{task}/complete', 'TaskController@complete');
+Route::post('/home', 'TaskController@store');
+Route::get('/tasks', 'TaskController@index');
+Route::get('/tasks/create', 'TaskController@create');
+Route::get('/tasks/{task}', 'TaskController@show');
+Route::get('/tasks/{task}/edit', 'TaskController@edit');
+Route::put('/tasks/{task}', 'TaskController@update');
+Route::delete('/tasks/{task}', 'TaskController@destroy');
