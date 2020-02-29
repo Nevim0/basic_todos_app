@@ -15,7 +15,7 @@
                     </div>
                 </div>
 
-                <div class="form-inline"><a href="/tasks/{{$task->id}}/edit" class="btn btn-primary">Edit</a>
+                <div class="form-inline pt-2"><a href="/tasks/{{$task->id}}/edit" class="btn btn-primary mr-2">Edit</a>
                     <form method="post" action="/tasks/{{$task->id}}">
                         @csrf
                         @method('DELETE')

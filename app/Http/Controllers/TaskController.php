@@ -7,12 +7,18 @@ use \App\Task;
 
 class TaskController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(){
         return redirect('/home');
     }
 
     public function create(){
-        return view('task.create');
+        $task = new Task();
+        return view('task.create', compact('task'));
     }
 
     public function store(){
@@ -21,7 +27,7 @@ class TaskController extends Controller
                 'description' => 'required']);
         $task = auth()->user()->tasks()->create($data);
 
-        return redirect('/home');
+        return redirect('/tasks');
     }
 
     public function show(Task $task){
@@ -38,18 +44,18 @@ class TaskController extends Controller
 
         $task->update($data);
 
-        return redirect('/home');
+        return redirect('/tasks/'.$task->getKey());
     }
 
     public function destroy(Task $task){
         $task->delete();
 
-        return redirect('/home');}
+        return redirect('/tasks');}
 
     public function complete(Task $task){
         $task->setAttribute('completed', 1);
         $task->save();
 
-        return redirect('/home');
+        return redirect('/tasks');
     }
 }

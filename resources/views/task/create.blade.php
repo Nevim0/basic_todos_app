@@ -5,7 +5,6 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <a href="/home" class="btn btn-primary mb-4"> &lt; Back</a>
-
                 <div class="card">
                     <div class="card-header">New task</div>
 

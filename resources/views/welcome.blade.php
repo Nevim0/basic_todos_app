@@ -81,9 +81,10 @@
 
             <div class="content">
                 @auth
-                    <h1>Hello</h1>
+                    <h1>Hello, {{auth()->user()->name}}</h1>
+                    <a href="/tasks">Show tasks</a>
                 @else
-                    <h1>Please log in</h1>
+                    <h1>Please log in or create account</h1>
                 @endauth
             </div>
         </div>
