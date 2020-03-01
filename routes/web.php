@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::put('/tasks/{task}/complete', 'TaskController@complete');
+Route::put('/tasks', 'TaskController@complete');
 Route::post('/home', 'TaskController@store');
 Route::get('/tasks', 'TaskController@index');
 Route::get('/tasks/create', 'TaskController@create');

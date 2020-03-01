@@ -13,6 +13,7 @@ class TaskController extends Controller
     }
 
     public function index(){
+
         return redirect('/home');
     }
 
@@ -52,7 +53,9 @@ class TaskController extends Controller
 
         return redirect('/tasks');}
 
-    public function complete(Task $task){
+    public function complete(){
+        $task = Task::find(request()->id);
+        dd($task);
         $task->setAttribute('completed', 1);
         $task->save();
 
