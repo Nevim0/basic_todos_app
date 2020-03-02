@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Task;
+use App\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -26,5 +28,9 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //
+
+        Gate::define('access', function (User $user, Task $task){
+            return $task->user->is($user);
+        });
     }
 }

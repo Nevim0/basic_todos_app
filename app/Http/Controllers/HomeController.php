@@ -23,8 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $tasks = auth()->user()->tasks;
-
-        return view('home', compact('tasks'));
+        return redirect('/tasks');
     }
 }

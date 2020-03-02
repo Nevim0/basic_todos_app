@@ -6,7 +6,7 @@
         <div class="card-header">New task</div>
 
         <div class="card-body">
-            <form action='/home' method='post'>
+            <form action='/tasks' method='post'>
                 @csrf
 
                 <div class="form-group">

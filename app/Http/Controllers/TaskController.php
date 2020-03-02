@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use \App\Task;
 
@@ -13,8 +15,9 @@ class TaskController extends Controller
     }
 
     public function index(){
+        $tasks = auth()->user()->tasks;
 
-        return redirect('/home');
+        return view('home', compact('tasks'));
     }
 
     public function create(){
@@ -25,40 +28,53 @@ class TaskController extends Controller
     public function store(){
         $data = request()->validate(
             ['title' => 'required',
-                'description' => 'required']);
-        $task = auth()->user()->tasks()->create($data);
+            'description' => 'required']);
+        auth()->user()->tasks()->create($data);
 
         return redirect('/tasks');
     }
 
     public function show(Task $task){
+        if($this->cannot_access($task))
+            return redirect('/tasks');
+
         return view('task.show', compact('task'));
     }
 
     public function edit(Task $task){
+        if($this->cannot_access($task))
+            return redirect('/tasks');
+
         return view('task.edit', compact('task'));
     }
 
     public function update(Task $task){
-        $data = request()->validate(['title' => 'required',
+        if($this->cannot_access($task))
+            return redirect('/tasks');
+
+        $data = request()->validate(
+            ['title' => 'required',
             'description' => 'required']);
-
         $task->update($data);
-
         return redirect('/tasks/'.$task->getKey());
     }
 
     public function destroy(Task $task){
-        $task->delete();
+        if($this->cannot_access($task))
+            return redirect('/tasks');
 
+        $task->delete();
         return redirect('/tasks');}
 
     public function complete(){
         $task = Task::find(request()->id);
-        dd($task);
-        $task->setAttribute('completed', 1);
+        $task->completed = 1;
         $task->save();
 
         return redirect('/tasks');
     }
+
+    protected function cannot_access($task){
+        return Gate::denies('access', $task);
+        }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <a href='/tasks/create' class="btn btn-primary mb-4">Create a new task</a>
+    <a href='/tasks/create' class="btn btn-primary mb-4">Create new task</a>
     <ul class="list-group">
         @forelse($tasks as $task)
             <li class="list-group-item {{$task->completed? 'list-group-item-success' : 'list-group-item-light'}} d-flex justify-content-between align-items-center">
